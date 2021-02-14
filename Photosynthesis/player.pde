@@ -4,12 +4,37 @@ class player
   int availableMidTrees;
   int availableLargeTrees;
   playerboard playerboard;
+  playeractions playeractions;
   
-  player()
+  int state;
+  int type; // human = 0, AI = 1;
+  
+  player(int type)
   {
      availableSmallTrees = 4;
-     availableMidTrees = 1;            
+     availableMidTrees = 1;      
+     state = PLAYER_DONE;
+     this.type = type;
   }   
+  
+  void update(gameboard gameboard)
+  {
+    int action = 0;
+    float treesize = 0;
+    if(type == HUMAN)
+    {
+      //check for user input
+    }
+    else
+    {
+      //let AI make choices     
+      if(playeractions.act(action, treesize, gameboard)==0)
+      {
+         //player done if no action was taken
+         state = PLAYER_DONE;
+      }
+    }
+  }
 }
 
 class playerboard

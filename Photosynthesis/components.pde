@@ -1,6 +1,3 @@
-
-
-
 class board
 {
    ArrayList<boardSpace> board;
@@ -53,7 +50,7 @@ class board
 
 class boardSpace
 {  
-  int ns30;
+  int ns30;//ns = neighbour space
   int ns90;
   int ns150;
   int ns210;
