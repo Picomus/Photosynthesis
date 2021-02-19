@@ -10,18 +10,15 @@
 //---no_of_small_trees
 //---no_of_mid_tree
 //---no_of_large_trees
-//---next player
-//---2nd next player
-//---3rd next player
 
 
 
 
 /*** Output from neural network ***/
-//buy seed   - no/yes  (0.0-0.5, 0.5-1.0)
-//buy tree   - no/yes  (0.0-0.5, 0.5-1.0)
-//plant seed - no/yes  (0.0-0.5, 0.5-1.0)
-//grow tree  - no/yes  (0.0-0.5, 0.5-1.0)
+//buy seed - (higher no = higher priority)
+//buy tree - (higher no = higher priority)
+//plant seed - (higher no = higher priority)
+//grow tree - (higher no = higher priority)
 //tree size for buying - small/mid/large (0-0.333,0.333-0.666,0.666-1.0) 
 //boardspaces - action here (higher no = higher priority)
 

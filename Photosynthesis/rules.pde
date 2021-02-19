@@ -40,7 +40,7 @@ class gamelogic
        players.add(new player(AI));
     }
     
-    sun_pos = 150; //degrees
+    sun_pos = 2; // 150 degrees
     first_player = 0;
     current_player = 0;
     players.get(current_player).state = PLAYER_PHOTOSYNTHESIS;
@@ -60,7 +60,7 @@ class gamelogic
     {
        if(players.get(current_player).state == PLAYER_PHOTOSYNTHESIS)
        {      
-          players.get(current_player).playerboard.lightpoints = updateLightpoints();
+          updateLightpoints();
           players.get(current_player).state = PLAYER_ACTION;
        }
     
@@ -70,10 +70,10 @@ class gamelogic
        if(players.get(current_player).state == PLAYER_DONE)
        {
           //move sun
-          sun_pos -= 60; //clockwise
+          sun_pos -= 1; //clockwise
           if (sun_pos < 0)
           {
-             sun_pos += 360;
+             sun_pos += 6;
           }    
        
           //update shadows
@@ -104,21 +104,95 @@ class gamelogic
     }
   }
       
-  int updateLightpoints()
+  void updateLightpoints()
   {
-    int lightpoints = 0;
-    return lightpoints;
+     for(int i = 0;i<gameboard.boardspaces.size();i++)
+     {
+        if(gameboard.boardspaces.get(i).tree > 1)
+        {
+          //println("tree of size " + gameboard.boardspaces.get(i).tree + " at " + (i+1));
+          if(gameboard.boardspaces.get(i).in_shadow == 0)
+          {
+             int player_id = gameboard.boardspaces.get(i).player_id;
+             players.get(player_id).playerboard.lightpoints += (gameboard.boardspaces.get(i).tree-1);              
+          }
+        }
+     }               
   }
   
   void updateShadows()
   {
+    
+     //reset all shadows
+     for(int i = 0;i<gameboard.boardspaces.size();i++)
+     {
+       gameboard.boardspaces.get(i).in_shadow = 0;
+     }
+    
      //for each board space
      //   if tree on space
      //      trace a path from the tree in opposite direction of the sun
      //         for each space in the path, mark it as being in shadow unless it contains a larger tree than the tree casting the shadow
      //
      //a shadow paths length is determined by the size of the tree casting the shadow, but can't extend further than the edges of the board
-     //small tree = 1, medium = 2, large = 3         
+     //small tree = 1, medium = 2, large = 3
+     
+     //determine shadow direction
+     int shadow_direction = sun_pos+3;
+     if(shadow_direction > 5)
+     {
+       shadow_direction -= 6;
+     }
+         
+     //loop through each space
+     for(int i = 0;i<gameboard.boardspaces.size();i++)
+     {
+        //does this space contain a tree?
+        if(gameboard.boardspaces.get(i).tree > 1 )
+        {    
+           //println("Tree at space " + (i+1) + " casts shadows on these spaces:");
+           int ns_id = gameboard.boardspaces.get(i).ns[shadow_direction]-1;  //get id of first neighbour space in shadow direction
+           for(int i_path = 0;i_path<(gameboard.boardspaces.get(i).tree-1);i_path++)
+           {            
+             if(ns_id >= 0)
+             {
+                int ns_treesize = gameboard.boardspaces.get(ns_id).tree;                                              
+                if(ns_treesize <= gameboard.boardspaces.get(i).tree)
+                {
+                   //this space is in shadow
+                   gameboard.boardspaces.get(ns_id).in_shadow = 1;
+                   //println(ns_id+1);
+                }                
+                ns_id = gameboard.boardspaces.get(ns_id).ns[shadow_direction]-1;  //get id of next neighbour space in shadow direction
+                
+             }
+             else
+             {
+               break; //at edge of board
+             }
+           }
+        }
+     }
+     
+  }
+  
+  void printLightPoints()
+  {
+     for(int p = 0;p<players.size();p++)
+     {      
+        println("Player " + (p+1) + " has " + players.get(p).playerboard.lightpoints);
+     }
+  }
+  
+  void printSpacesWithShadow()
+  {
+    for(int i = 0;i<gameboard.boardspaces.size();i++)
+     {
+       if(gameboard.boardspaces.get(i).in_shadow == 1)
+       {
+         println("Space " + (i+1) + " has shadow");
+       }
+     }
   }
   
   

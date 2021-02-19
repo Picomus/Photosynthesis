@@ -3,14 +3,14 @@ class player
   int availableSmallTrees;
   int availableMidTrees;
   int availableLargeTrees;
-  playerboard playerboard;
-  playeractions playeractions;
+  playerboard playerboard = new playerboard();
+  playeractions playeractions = new playeractions();
   
   int state;
   int type; // human = 0, AI = 1;
   
   player(int type)
-  {
+  {    
      availableSmallTrees = 4;
      availableMidTrees = 1;      
      state = PLAYER_DONE;
