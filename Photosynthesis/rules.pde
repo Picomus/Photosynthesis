@@ -20,7 +20,6 @@ class gamelogic
   
   gameboard gameboard;
   ArrayList<player> players;
-  playeractions playeractions;
   
   int sun_pos;
   int first_player;
@@ -64,8 +63,17 @@ class gamelogic
           players.get(current_player).state = PLAYER_ACTION;
        }
     
-       //activate current player
-       players.get(current_player).update(gameboard);
+       //check if player has chosen a valid action
+       if(players.get(current_player).update(gameboard, UI) == 0)
+       {
+         //resolve action
+         if(players.get(current_player).action_index == GROW_TREE)
+         {
+            grow_tree(players.get(current_player).action_space, players.get(current_player));
+         }
+       }
+       
+       
     
        if(players.get(current_player).state == PLAYER_DONE)
        {
@@ -176,7 +184,67 @@ class gamelogic
      
   }
   
-  void printLightPoints()
+  //function that determines which spaces can be seeded in
+  void availableSeedSpaces()
+  {
+    
+  }
+  
+ 
+  
+  void buy_seed(player player)
+  {
+     
+  }
+  
+  void buy_tree(float treesize, player player)
+  {
+    
+  }
+  
+  void plant_seed(int space, player player)
+  {
+   
+  }
+  
+  int grow_tree(int space, player player)
+  {
+    
+     int return_value = -1;
+               
+     //check if there's a seed or a tree to grow
+     int treesize = gameboard.boardspaces.get(space).tree; 
+     if(treesize > 0)
+     {
+        //check if that tree belongs to the player making this action
+        if(gameboard.boardspaces.get(space).player_id == current_player)
+        {
+         
+           //does player have a tree avaiable of the requested size?
+           if(player.availableTrees(treesize) > 0)
+           {                  
+              int cost = player.playerboard.getTreeGrowthCost(treesize);
+          
+              //does player have enough light points?
+              if(player.playerboard.lightpoints >= cost)
+              {
+                 //this action is possible, now update game accordingly
+                 if(treesize < 4)
+                 {
+                    return_value = 0;            
+                 }
+                 else
+                 {
+                    return_value = 0;               
+                 }
+              }
+           }
+        }
+     }           
+     return return_value;
+  }
+  
+   void printLightPoints()
   {
      for(int p = 0;p<players.size();p++)
      {      
@@ -194,49 +262,6 @@ class gamelogic
        }
      }
   }
-  
-  
-}
-
-/*
-1) Knows what actions can be taken
-2) Checks whether a requested action is allowed according to the current state of the game
-3) Adjusts game state according to action
-*/
-class playeractions
-{
-  
-  playeractions()
-  {
-    
-  }
-  
-  //0 - buy seed
-  //1 - buy tree
-  //2 - plant seed
-  //3 - grow tree    
-  int act(int action, float var1, gameboard gameboard)
-  {
-     int action_taken = 0;
-     if(action == BUY_SEED)
-     {
-       action_taken = 1;
-     }     
-     else if(action == BUY_TREE)
-     {
-       action_taken = 1;
-     }     
-     else if(action == PLANT_SEED)
-     {
-       action_taken = 1;
-     }     
-     else if(action == GROW_TREE)
-     {
-       action_taken = 1;
-     }     
-     return action_taken;
-  }
-  
   
   
   

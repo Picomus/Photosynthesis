@@ -5,4 +5,29 @@
 
 
 
- 
+class UI
+{
+  control control;
+  graphics graphics;  
+}
+
+class control
+{
+  control()
+  {
+    
+  }
+  
+  int getAction()
+  {
+    return 0;//dummy
+  }
+}
+
+class graphics
+{
+  graphics()
+  {
+    
+  }
+}

@@ -1,32 +1,4 @@
 
-/*** Input to neural network ***/
-
-//boardspaces - nothing/seed/small tree/mid tree/large tree (0.0, 0.25, 0.5, 0.75, 1.0)
-//boardspaces - opponent id(color),                         (0.0, 0.333, 0.666, 1.0)
-//gamephase (3x6)
-//for each player (starting with self and then continuing according to who has next turn)
-//---lightpoints (steps of 1/20)
-//---no_of_seeds
-//---no_of_small_trees
-//---no_of_mid_tree
-//---no_of_large_trees
-
-
-
-
-/*** Output from neural network ***/
-//buy seed - (higher no = higher priority)
-//buy tree - (higher no = higher priority)
-//plant seed - (higher no = higher priority)
-//grow tree - (higher no = higher priority)
-//tree size for buying - small/mid/large (0-0.333,0.333-0.666,0.666-1.0) 
-//boardspaces - action here (higher no = higher priority)
-
-
-
-
-
-
 class trainer
 {
 }
@@ -188,4 +160,62 @@ class neuralNetwork
                                
        return output;
     }      
+}
+
+//AI for photosynthesis using the neuralNetwork class
+class photoSynthesisAI
+{
+  
+  neuralNetwork AI;
+  
+  photoSynthesisAI()
+  {
+     int hidden_layers[] = {100}; 
+     AI = new neuralNetwork(50, 6, hidden_layers);   
+  }
+  
+  void update(gamelogic gamelogic)
+  {
+     /*** Input to neural network ***/
+     //boardspaces - nothing/seed/small tree/mid tree/large tree (0.0, 0.25, 0.5, 0.75, 1.0)
+     //boardspaces - opponent id(color),                         (0.0, 0.333, 0.666, 1.0)
+     //gamephase (3x6)
+     //for each player (starting with self and then continuing according to who has next turn)
+     //---lightpoints (steps of 1/20)
+     //---no_of_seeds
+     //---no_of_small_trees
+     //---no_of_mid_tree
+     //---no_of_large_trees
+     
+     
+  }
+  
+  
+  
+  
+  
+  
+  
+  /*** Output from neural network ***/
+  //buy seed - (higher no = higher priority)
+  //buy tree - (higher no = higher priority)
+  //plant seed - (higher no = higher priority)
+  //grow tree - (higher no = higher priority)
+  //tree size for buying - small/mid/large (0-0.333,0.333-0.666,0.666-1.0) 
+  //boardspaces - action here (higher no = higher priority)
+   
+  int getAction()
+  {
+     return 0;
+  }
+  
+  int getActionSpace()
+  {
+     return 0;
+  }
+  
+  int getTreesize()
+  {
+     return 0;
+  }
 }
